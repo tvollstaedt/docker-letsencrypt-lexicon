@@ -1,15 +1,19 @@
-FROM csmith/letsencrypt-generic:latest
-MAINTAINER Chris Smith <dke@chameth.com> 
+FROM ubuntu:bionic 
+MAINTAINER Thomas Vollstädt <tv@engage.de>
+
+COPY dehydrated run.sh config /
+RUN chmod +x /run.sh /dehydrated
 
 RUN apt-get update \
  && apt-get install -y \
+      curl \
       inotify-tools \
-      python3 \
-      python3-pip
-
-RUN pip3 install \
-      dns-lexicon==3.2.8
+      dns-lexicon
 
 ADD hook.sh /dns/hook
 RUN chmod +x /dns/hook
 
+VOLUME ["/letsencrypt"]
+
+ENTRYPOINT ["/bin/bash"]
+CMD ["/run.sh"]
