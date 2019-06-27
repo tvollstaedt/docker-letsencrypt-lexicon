@@ -8,7 +8,7 @@ RUN apt-get update \
  && apt-get install -y \
       curl \
       inotify-tools \
-      dns-lexicon
+      lexicon
 
 ADD hook.sh /dns/hook
 RUN chmod +x /dns/hook
